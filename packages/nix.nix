@@ -1,16 +1,16 @@
 { pkgs, config, ... }:
 let
-  workPkgs = [
-    (
-      with pkgs.dotnetCorePackages;
-      combinePackages [
-        # Needed for azure-functions-core-tools
-        aspnetcore_8_0-bin
+  dotnet =
+    with pkgs.dotnetCorePackages;
+    combinePackages [
+      # Needed for azure-functions-core-tools
+      aspnetcore_8_0-bin
 
-        # Needed for zed bicep extension
-        aspnetcore_10_0-bin
-      ]
-    )
+      # Needed for zed bicep extension
+      sdk_10_0-bin
+    ];
+  workPkgs = [
+    dotnet
     pkgs.azure-functions-core-tools
     pkgs.azurite
     pkgs.nodejs
@@ -36,6 +36,15 @@ in
     pkgs.git-absorb
   ]
   ++ (if config.isWork then workPkgs else personalPkgs);
+
+  # Needed for zed bicep extension
+  environment.etc =
+    if config.isWork then
+      {
+        "dotnet/install_location_arm64".text = "${dotnet}/share/dotnet";
+      }
+    else
+      { };
 
   fonts.packages = with pkgs; [
     maple-mono.NF-CN-unhinted
