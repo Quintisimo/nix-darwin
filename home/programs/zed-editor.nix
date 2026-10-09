@@ -40,7 +40,9 @@
         };
         agent = {
           dock = "right";
-          sidebar_side = "right";
+          threads_sidebar = {
+            position = "right";
+          };
           default_model = {
             provider = "copilot_chat";
             model = "gpt-4.1";
