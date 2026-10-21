@@ -14,6 +14,7 @@
         "affinity"
         "imageoptim"
         "wifiman"
+        "iina"
       ];
       workBrews = [
         "unixodbc"
