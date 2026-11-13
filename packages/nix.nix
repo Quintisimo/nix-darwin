@@ -15,6 +15,7 @@ let
     pkgs.azurite
     pkgs.nodejs
     pkgs.pnpm_10
+    pkgs.heroku
   ];
   personalPkgs = [
     # Needed for zed pkl extension
